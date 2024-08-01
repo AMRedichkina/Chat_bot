@@ -1,4 +1,6 @@
 **/env/
+# Ignore trash files
+download_data/.Trash-0/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
