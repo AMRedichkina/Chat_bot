@@ -1,0 +1,40 @@
+services:
+  chat:
+    build:
+      context: ./chat
+    ports:
+      - 8889:8889
+    env_file:
+      - .env
+    volumes:
+      - ./chat:/app
+    working_dir: /app
+    depends_on:
+      - database
+
+  database:
+    image: neo4j:5.21
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=${NEO4J_USERNAME}/${NEO4J_PASSWORD}
+      - NEO4JLABS_PLUGINS=["apoc"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:7474 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  
+  download_data:
+    build:
+      context: ./download_data
+    ports:
+      - "8888:8888"
+    env_file:
+      - .env
+    volumes:
+      - ./download_data:/app
+    depends_on:
+      - database
+  

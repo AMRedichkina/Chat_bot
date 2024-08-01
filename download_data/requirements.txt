@@ -1,0 +1,5 @@
+neo4j==5.23.0
+jupyter==1.0.0
+openai==1.37.1
+pandas==2.0.3
+langchain==0.2.11
