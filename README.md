@@ -40,7 +40,7 @@ DIMENSIONS=<embedding_dimensions>
 SIMILARITY_FUNCTION=<similarity_function>
 ```
 
-![Demo of Library ChatBot](./asserts/demo.gif)
+![Demo of Library ChatBot](./asserts/demo.png)
 
 
 [View Presentation PDF](./asserts/Presentation_1.pdf)
