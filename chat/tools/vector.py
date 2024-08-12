@@ -23,8 +23,7 @@ RETURN
     score,
     {
         book_title: node.title,
-        author: [(book)-[:WRITTEN_BY]-(author) | author.name],
-        genres: [(book)-[:HAS_GENRE]->(genre) | genre.name]
+        author: [(node)-[:WRITTEN_BY]-(author) | author.name]
     } AS metadata
 """
 )
@@ -54,12 +53,12 @@ plot_retriever = create_retrieval_chain(
     question_answer_chain
 )
 
-def get_movie_plot(input):
+def get_book_plot(input):
     """
-    Retrieve movie plot summaries based on a given input query.
+    Retrieve book plot summaries based on a given input query.
 
     Args:
-        input (str): The input query for retrieving movie plot summaries.
+        input (str): The input query for retrieving book plot summaries.
 
     Returns:
         dict: The result from the retrieval chain, including plot summaries and associated metadata.

@@ -11,7 +11,7 @@ from langchain_core.prompts import PromptTemplate
 from utils import get_session_id
 from llm import llm
 from graph import graph
-from tools.vector import get_movie_plot
+from tools.vector import get_book_plot
 from tools.cypher import cypher_qa
 
 
@@ -22,22 +22,22 @@ chat_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-movie_chat = chat_prompt | llm | StrOutputParser()
+book_chat = chat_prompt | llm | StrOutputParser()
 
 tools = [
     Tool.from_function(
         name="General Chat",
         description="For general books chat not covered by other tools",
-        func=movie_chat.invoke,
+        func=book_chat.invoke,
     ),
     Tool.from_function(
         name="Books Plot Search",
         description="For when you need to find information about books based on a plot or find the book if it's not covered by other tools",
-        func=get_movie_plot,
+        func=get_book_plot,
     ),
     Tool.from_function(
         name="Book information",
-        description="Search for books based on author, genre, rating, or provide detailed book information using Cypher queries",
+        description="Search for books based on author, genre, rating, year, recommend the book (you have to find one random book) or provide detailed book information using Cypher queries",
         func=cypher_qa,
     )
 ]
@@ -48,8 +48,8 @@ def get_memory(session_id):
 
 
 agent_prompt = PromptTemplate.from_template("""
-You are a book expert providing information about books in the library. 
-Your responses should only include information about books that are present in the Neo4j database. 
+The chatbot, modeled as a librarian, should display traits such as attentiveness, thoroughness, and a deep passion for literature.
+Your responses should only include information about books that are present in the Neo4j database. Just like a librarian who might share interesting facts or stories about a book in the Neo4j database or author, the chatbot should be able to weave narratives that engage the user, enhancing the interaction with cultural and historical context where appropriate.
 Do not answer any questions using your pre-trained knowledge, only use the information available in the Neo4j database.
 Do not answer any questions that do not relate to books, authors, or genres.
 
