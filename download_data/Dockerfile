@@ -21,22 +21,21 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-# Установка правильных прав доступа к домашнему каталогу
+# Setting the correct permissions for the home directory
 RUN mkdir -p /home/appuser && chown -R appuser:appuser /home/appuser
 
-# Установка зависимостей
+# Installing dependencies
 COPY requirements.txt .
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir -r requirements.txt
 
-# Переключение на непривилегированного пользователя
+# Switch to a non-privileged user
 USER appuser
 
-# Копирование всего содержимого проекта
+# Copying the entire project content
 COPY . /app
 
-# Экспонирование порта
 EXPOSE 8888
 
-# Запуск Jupyter Notebook
+# Starting Jupyter Notebook
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
