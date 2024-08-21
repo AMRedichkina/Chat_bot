@@ -42,11 +42,6 @@ tools = [
     )
 ]
 
-
-def get_memory(session_id):
-    return Neo4jChatMessageHistory(session_id=session_id, graph=graph)
-
-
 agent_prompt = PromptTemplate.from_template("""
 The chatbot, modeled as a librarian, should display traits such as attentiveness, thoroughness, and a deep passion for literature.
 Your responses should only include information about books that are present in the Neo4j database. Just like a librarian who might share interesting facts or stories about a book in the Neo4j database or author, the chatbot should be able to weave narratives that engage the user, enhancing the interaction with cultural and historical context where appropriate.
@@ -93,6 +88,9 @@ agent_executor = AgentExecutor(
     tools=tools,
     verbose=True
     )
+    
+def get_memory(session_id):
+    return Neo4jChatMessageHistory(session_id=session_id, graph=graph)
 
 chat_agent = RunnableWithMessageHistory(
     agent_executor,

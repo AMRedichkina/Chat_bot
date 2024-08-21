@@ -11,9 +11,9 @@ This project includes a Library ChatBot implemented using Streamlit, designed to
 
 ## Technology Stack
 
-- **Streamlit:** 
-- **Neo4j:**
-- **OpenAI API:**
+- **Streamlit** 
+- **Neo4j**
+- **OpenAI API**
 - **Langchain**
 - **Docker**
 

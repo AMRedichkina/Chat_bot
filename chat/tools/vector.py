@@ -8,7 +8,6 @@ from langchain.chains import create_retrieval_chain
 
 from langchain_core.prompts import ChatPromptTemplate
 
-# Create an instance of Neo4jVector using an existing index.
 neo4jvector = Neo4jVector.from_existing_index(
     embeddings,
     graph=graph,
@@ -28,17 +27,14 @@ RETURN
 """
 )
 
-# Convert the Neo4j vector search into a retriever that can be used in a chain.
 retriever = neo4jvector.as_retriever()
 
-# Template instructions for the chat prompt
 instructions = (
     "Use the given context to answer the question."
     "If you don't know the answer, say you don't know."
     "Context: {context}"
 )
 
-# Create a chat prompt template from a series of system-human message pairs.
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", instructions),
@@ -46,7 +42,6 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Create a chain that combines document retrieval with an LLM for answering questions.
 question_answer_chain = create_stuff_documents_chain(llm, prompt)
 plot_retriever = create_retrieval_chain(
     retriever, 
